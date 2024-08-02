@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest News</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="~/css/widget.css" rel="stylesheet" asp-append-version="true">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light gray background */
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 3); /* Subtle shadow */
+            border: none; /* No border */
+        }
+        .card-title {
+            color: #000000; /* Bootstrap primary color */
+            font-size: 1.25rem; /* Larger font size for titles */
+            margin-bottom: 0.5rem;
+        }
+        .card-text {
+            font-size: 1rem; /* Standard font size */
+            color: #ffff; /* Darker gray for text */
+        }
+        .card-footer {
+            background-color: #f8f9fa; /* Light gray for footer */
+            border-top: 1px solid #dee2e6; /* Light border on top */
+        }
+        .btn-primary {
+            background-color: #000000; /* Bootstrap primary color */
+            border-color: #007bff; /* Same border color */
+        }
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+            border-color: #0056b3; /* Same border color */
+        }
+        h1 {
+            color: #ffffff; /* Darker heading */
+            font-size: 5rem; /* Larger font size */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="boxs project_widget">
+                    <div class="pw_content">
+                        <div class="pw_header">
+                            <h6>Stock Information</h6>
+                            <small class="text-muted">Symbol: @Model.StockData.Symbol</small>
+                        </div>
+                        <div class="pw_meta">
+                            <span>@Model.StockData.Price @Model.StockData.Currency</span>
+                            <small class="text-muted">Current Price</small>
+                            <small class="text-danger">Updated: @DateTime.Now</small>
+                        </div>
+                        <div class="pw_meta">
+                            <p class="text-muted mt-2 mb-0"><strong>Symbol:</strong> @Model.StockData.Symbol</p>
+                            <p class="text-muted mt-2 mb-0"><strong>Exchange:</strong> @Model.StockData.Exchange</p>
+                            <p class="text-muted mt-2 mb-0"><strong>Type:</strong> @Model.StockData.Type</p>
+                            <p class="text-muted mt-2 mb-0"><strong>Price:</strong> @Model.StockData.Price @Model.StockData.Currency</p>
+                            <p class="text-muted mt-2 mb-0"><strong>Volume:</strong> @Model.StockData.Volume</p>
+                            <p class="text-muted mt-2 mb-0"><strong>Change:</strong> @Model.StockData.Change @Model.StockData.Currency</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-4">
+        <h1 class="mb-4">Latest News</h1>
+        <div class="row">
+            @foreach (var article in Model.NewsArticles)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">@article.Title</h5>
+                            <p class="card-text">@article.Description</p>
+
+                        </div>
+                        <div class="card-footer">
+                            <a href="@article.Url" class="btn btn-primary">Read more</a>
+                            <p class="text-muted mt-2 mb-0">Published: @article.PublishedDate</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <h1 class="mb-4">Climate Data</h1>
+        <div class="row">
+            @if (Model.ClimateData?.FirstStationData != null)
+            {
+            <div class="col-md-12">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <!-- Display climate data here -->
+                        <h5 class="card-title">Climate Data</h5>
+                            <p class="card-text">Maximum Temperature: @Model.ClimateData.FirstStationData.Tmax</p>
+                            <p class="card-text">Minimum: @Model.ClimateData.FirstStationData.Tmin</p>
+                            <p class="card-text">Date Registered: @Model.ClimateData.FirstStationData.Date</p>
+                    </div>
+                </div>
+                </div>
+            }
+            else
+            {
+                <p>No climate data available</p>
+            }
+        </div>
+    </div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
